@@ -5,15 +5,39 @@
  </head>
  <body>
  <style type="text/css">
-   body { 
-    background-color: #d9d9d9;
-   }
+	body { 
+		background-color: #d9d9d9;
+	}
+	.booth {
+		width: 400px;
+		background: #ccc;
+		border: 10px solid #ddd;
+		margin: 0 auto;
+	}
  </style>
  <form id="images">
-  <img id="imgMain" src="./1.png">
-  <img id="imgBack" src="./2.png">
-  <canvas id="imgResult" src=""></canvas>
+     <video id="video" id="video" autoplay="autoplay" ></video>
+	  <img id="imgBack" src="./1.png">
+ </form>
+  <canvas id="imgResult"></canvas>
   <input type="button" value="Push me!" id="myBtn">
-  <script type="text/javascript" src="Image.js"></script>
+  <script type="text/javascript" src="./Image.js"></script>
+  <script>
+  window.onload = function () {
+
+    var video = document.getElementById('video');
+	var canvas =document.getElementById('imgResult');
+	canvas.width = video.style.Width;
+	canvas.height = video.style.Height
+
+    var videoStreamUrl = false;
+	navigator.getUserMedia({video: true}, function (stream) {
+		video.srcObject=stream;
+		video.play()	  
+    }, function () {
+      console.log('что-то не так с видеостримом или пользователь запретил его использовать :P');
+    });
+  };
+  </script>
  </body>
 </html>
