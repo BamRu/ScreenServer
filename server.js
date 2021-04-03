@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const port = 8000;
 
-app.use('/image', express.static(path.join(__dirname,'..','image')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
 	res.sendfile('index.html');

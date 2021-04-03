@@ -15,8 +15,8 @@
 		margin: 0 auto;
 	}
  </style>
-	<img id="imageF" src="image/1.png">
-	<img id="imageB" src="image/2.png">
+	<img id="imageF" src="./image/1.png">
+	<img id="imageB" src="./image/2.png">
     <canvas id="canvasFront"></canvas>
 	<canvas id="canvasBack"></canvas>
 	<canvas id="imgResult" ></canvas>
@@ -25,17 +25,21 @@
 
   
   <script>
+ 
+	var imageF=document.getElementById("imageF");
+	var imageB=document.getElementById("imageB");
+ 
 	window.onload = function () {
 	
-		canvasFront = document.getElementById("canvasFront");
-		canvasBack = document.getElementById("canvasBack");
-		imageF=document.getElementById("imageF");
-		imageB=document.getElementById("imageB");
-		contextF = canvasFront.getContext("2d");
-		contextB = canvasBack.getContext("2d");
+		var canvasFront = document.getElementById("canvasFront");
+		var canvasBack = document.getElementById("canvasBack");
 		
-		contextF=drawImage(imageF, 0, 0);
-		contextB=drawImage(imageB, 0, 0);
+		var contextF = canvasFront.getContext("2d");
+		var contextB = canvasBack.getContext("2d");
+		if (imageB.onload && imageF.onload) {
+			contextF=drawImage(imageF, 0, 0);
+			contextB=drawImage(imageB, 0, 0);
+		}	
 	}
 	
 	async function test(){
