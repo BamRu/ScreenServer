@@ -15,13 +15,51 @@
 		margin: 0 auto;
 	}
  </style>
- <form id="images">
-     <video id="video" id="video" autoplay="autoplay" ></video>
-	  <img id="imgBack" src="./1.png">
- </form>
-  <canvas id="imgResult"></canvas>
-  <input type="button" value="Push me!" id="myBtn">
-  <script type="text/javascript" src="./Image.js"></script>
+	<img id="imageF" src="image/1.png">
+	<img id="imageB" src="image/2.png">
+    <canvas id="canvasFront"></canvas>
+	<canvas id="canvasBack"></canvas>
+	<canvas id="imgResult" ></canvas>
+	<input type="button" value="Push me!" id="myBtn"  onclick="test()">
+  
+
+  
+  <script>
+	window.onload = function () {
+	
+		canvasFront = document.getElementById("canvasFront");
+		canvasBack = document.getElementById("canvasBack");
+		imageF=document.getElementById("imageF");
+		imageB=document.getElementById("imageB");
+		contextF = canvasFront.getContext("2d");
+		contextB = canvasBack.getContext("2d");
+		
+		contextF=drawImage(imageF, 0, 0);
+		contextB=drawImage(imageB, 0, 0);
+	}
+	
+	async function test(){
+		let response = await fetch('/test');
+
+		let text = await response.blob(); // прочитать тело ответа как текст
+
+		alert(text.slice(0, 80) + '...');
+	}
+	
+    async function submit() {
+      let blob = await new Promise(resolve => canvasFront.toBlob(resolve, 'image/png'));
+      let response = await fetch('/ImgBuf', {
+        method: 'POST',
+        body: blob
+      });
+
+      // сервер ответит подтверждением и размером изображения
+      let result = await response.text();
+      alert(result.message);
+    }
+
+  </script>
+  <!--
   <script>
   window.onload = function () {
 
@@ -38,6 +76,6 @@
       console.log('что-то не так с видеостримом или пользователь запретил его использовать :P');
     });
   };
-  </script>
+  </script>-->
  </body>
 </html>
