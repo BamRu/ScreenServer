@@ -1,16 +1,22 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const port = 8000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/test', bodyParser.urlencoded({
+    extended: true
+}));
+
 app.get('/', (req, res) => {
 	res.sendfile('index.html');
 })
 
-app.get('/test', (req,res) => {
-	res.sendfile('image/1.png');
+app.post('/test', (req,res) => {
+	console.log('Uploaded: ', req.file)
+	// Homework: Upload file to S3
 })	
 
 app.listen(port, () => {
