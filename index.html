@@ -9,23 +9,47 @@
 		background-color: #d9d9d9;
 	}
  </style>
+	<!--<script src="./node_modules/canvas2image/canvas2image.js"></script>-->
 	<img id="imageF" src="./image/1.png"><!--style="visibility: hidden;"-->
 	<img id="imageB" src="./image/2.png"><!--style="visibility: hidden;"-->
-    <!--<canvas id="canvasFront"></canvas>
-	<canvas id="canvasBack"></canvas>-->
+    <canvas id="canvasFront"></canvas>
+	<canvas id="canvasBack"></canvas>
 	<input type="button" value="Push me!" id="myBtn"  onclick="test()">
 	<input type="button" value="Copy!" id="Copy"  > <!-- onclick="copy()" -->
 	<canvas id="imgResult" ></canvas>
-
+	<!--<input type="file" id="form" multiple>-->
 	<script>
+	
 	var formData = new FormData();
+	
 	var imageF=document.getElementById("imageF");
 	var imageB=document.getElementById("imageB");
-	//let photo = image.files[1];
-	formData.append("photoF",imageF);
-	formData.append("photoB",imageB);
+	
+	//var canvasF=document.createElement("canvas");
+	//var canvasB=document.createElement("canvas");
+	
+	var canvasF = document.getElementById("canvasFront");
+	var canvasB = document.getElementById("canvasBack");
+	
+	var ctxF = canvasF.getContext("2d");
+	var ctxB = canvasB.getContext("2d");
+			
+	window.onload = function() {		
+		imageF.onload= ctxF.drawImage(imageF, 0, 0);
+		imageB.onload= ctxB.drawImage(imageB, 0, 0);
+		formData.append("photoF",canvasF.toDataURL("image/png"));
+		formData.append("photoB",canvasB.toDataURL("image/png"));
+			
+		//console.log(formData.get("photoF"));		
+	}
+	
+	
+	//formData.append("photoF",canvasF.toDataURL("image/png"));
+	//formData.append("photoB",canvasB.toDataURL("image/png"));
+	
 
 	async function test(){
+	//console.log(formData.get("photoF"));
 	const response = await fetch('/test', 
 		{
 			method: 'POST',
@@ -33,7 +57,19 @@
 		});
 		const result = await response.json();
 		console.log('Успех:', JSON.stringify(result));
-}
+	}
+	
+	function addFiles(files) {
+		// добавляем файлы в общую кучу
+		Image.files = Store.files.concat(files);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
  /*
 	try {
