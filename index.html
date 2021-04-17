@@ -10,17 +10,19 @@
 	}
  </style>
 	<!--<script src="./node_modules/canvas2image/canvas2image.js"></script>-->
-	<img id="imageF" src="./image/1.png"><!--style="visibility: hidden;"-->
-	<img id="imageB" src="./image/2.png"><!--style="visibility: hidden;"-->
+	<img id="imageF" src="./image/1.png" style="visibility: hidden;">
+	<img id="imageB" src="./image/2.png" style="visibility: hidden;">
     <canvas id="canvasFront"></canvas>
 	<canvas id="canvasBack"></canvas>
 	<input type="button" value="Push me!" id="myBtn"  onclick="test()">
-	<input type="button" value="Copy!" id="Copy"  > <!-- onclick="copy()" -->
+	<input type="button" value="save" id="Copy"  onclick="uploads()" > <!-- onclick="copy()" -->
 	<canvas id="imgResult" ></canvas>
 	<!--<input type="file" id="form" multiple>-->
 	<script>
 	
 	var formData = new FormData();
+	
+	formData.enctype="multiple/form-data";
 	
 	var imageF=document.getElementById("imageF");
 	var imageB=document.getElementById("imageB");
@@ -34,13 +36,24 @@
 	var ctxF = canvasF.getContext("2d");
 	var ctxB = canvasB.getContext("2d");
 			
-	window.onload = function() {		
+	window.onload =  async function() {		
 		imageF.onload= ctxF.drawImage(imageF, 0, 0);
 		imageB.onload= ctxB.drawImage(imageB, 0, 0);
-		formData.append("photoF",canvasF.toDataURL("image/png"));
-		formData.append("photoB",canvasB.toDataURL("image/png"));
+		
+		imageF.width=0;
+		imageF.height=0;
+		imageB.width=0;
+		imageB.height=0;
+		
+		var imageBlobF = await new Promise(resolve => canvasF.toBlob(resolve, 'image/png'));
+		var imageBlobB = await new Promise(resolve => canvasB.toBlob(resolve, 'image/png'));
+
+		
+		formData.append("photoF", imageBlobF);
+		formData.append("photoB", imageBlobB);
 			
-		//console.log(formData.get("photoF"));		
+		console.log(formData.has("photoF"));		
+		console.log(formData.has("photo"));		
 	}
 	
 	
@@ -55,20 +68,22 @@
 			method: 'POST',
 			body: formData
 		});
+			
 		const result = await response.json();
 		console.log('Успех:', JSON.stringify(result));
 	}
 	
-	function addFiles(files) {
-		// добавляем файлы в общую кучу
-		Image.files = Store.files.concat(files);
+	async function uploads(){
+	//console.log(formData.get("photoF"));
+	const response = await fetch('/upload', 
+		{
+			method: 'POST',
+			body: formData
+		});
+			
+		const result = await response;
+		console.log('Успех:', (result));
 	}
-	
-	
-	
-	
-	
-	
 	
 	
  /*
