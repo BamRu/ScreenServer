@@ -12,3 +12,5 @@ document.getElementById('myBtn').onclick = function(){
 	retCtx.drawImage(video, 0, 0);
 	retCtx.drawImage(image2, 0, 0);
 };
+
+function drawImage
