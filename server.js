@@ -4,9 +4,10 @@ const app = express();
 const port = 8000;
 
 const multer  = require("multer"); // для сохранения фалов
+var upload = multer({ dest: 'uploads/' })
 
 const bodyParser = require('body-parser'); // обработка форм
-const urlencodedParser = bodyParser.urlencoded({extended: true}); // для обработки формы
+const urlencodedParser = bodyParser.urlencoded({extended: false}); // для обработки формы
 
 const reduce = require('image-blob-reduce')();	// blob to canvas
 const { createCanvas, Image} = require('canvas');	// canvas
@@ -25,17 +26,21 @@ app.get('/', (req, res) => {
 	res.sendfile('index.html');
 })
 
-app.post("/test", urlencodedParser, function (req, res) {
+app.post("/test",upload.single('photof'), function (req, res) {
 	
-	reduce.toCanvas = function (env){
-		return this
-	}
-	canvasf=reduce.toCanvas(req.body.photoF);
+	console.log(req.file);
+	//reduce.toCanvas(req.file.,1);
+		//console.log(req);
+	//let photo = req.body;
+	//console.log(photo);
+	
+//	console.log(req.body.photof);
+	
+	//canvasf=reduce.toCanvas(req.body,1);
 	//console.log('Uploaded: ', req.body.photoF);
 	//console.log(typeof(req.body));
 	//var formData = req.body;
 	//console.log(req);
-	console.log(req.body);
 	const Image = createCanvas(300, 150); 
 	//req.on('readable', function(){
     //console.log(req.read());

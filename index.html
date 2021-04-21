@@ -4,12 +4,13 @@
   <title>Kitty</title>
  </head>
  <body>
+
  <style type="text/css">
 	body { 
 		background-color: #d9d9d9;
 	}
  </style>
-	<!--<script src="./node_modules/canvas2image/canvas2image.js"></script>-->
+	<!--<script src="node_modules/canvas2image/canvas2image.js"></script>-->
 	<img id="imageF" src="./image/1.png" style="visibility: hidden;">
 	<img id="imageB" src="./image/2.png" style="visibility: hidden;">
     <canvas id="canvasFront"></canvas>
@@ -47,10 +48,16 @@
 		
 		var imageBlobF = await new Promise(resolve => canvasF.toBlob(resolve, 'image/png'));
 		var imageBlobB = await new Promise(resolve => canvasB.toBlob(resolve, 'image/png'));
-
 		
-		formData.append("photoF", imageBlobF);
-		formData.append("photoB", imageBlobB);
+		//var imageBlobF = Canvas2Image.convertToPNG(canvasF, 300, 150)
+		//var imageBlobB = Canvas2Image.convertToPNG(canvasB, 300, 150)
+		
+		//var photos = document.querySelector('input[type="file"][multiple]');
+		//photos.append(imageBlobF);
+		//photos.append(imageBlobB);
+		
+		formData.append("photoF",imageBlobF);
+		formData.append("photoB",imageBlobB);
 			
 		console.log(formData.has("photoF"));		
 		console.log(formData.has("photo"));		
