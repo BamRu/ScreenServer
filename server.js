@@ -11,10 +11,10 @@ const urlencodedParser = bodyParser.urlencoded({extended: false}); // для о�
 
 const reduce = require('image-blob-reduce')();	// blob to canvas
 const { createCanvas, Image} = require('canvas');	// canvas
-const canvasf = createCanvas(300, 150);	//	canvas 1
-const canvasb = createCanvas(300, 150);	//	canvas 2
-const ctxf = canvasf.getContext('2d');	//	canvas
-const ctxb = canvasb.getContext('2d');	//	canvas
+// const canvasf = createCanvas(300, 150);	//	canvas 1
+// const canvasb = createCanvas(300, 150);	//	canvas 2
+// const ctxf = canvasf.getContext('2d');	//	canvas
+// const ctxb = canvasb.getContext('2d');	//	canvas
 
 const imagef = new Image();
 const imageb = new Image();
@@ -29,19 +29,18 @@ app.get('/', (req, res) => {
 	res.sendfile('index.html');
 })
 
-app.post("/test", upload.array('photo', 2), function (req, res) {
+// app.post("/test", fucntion (req, res){
+//app.post("/test", urlencodedParser, function (req, res){
+app.post("/test", upload.any(), function (req, res) {
 	
+	console.log(req.body);
+	// console.log(req.body.photo);
 	console.log(req.files);
-	
-	imagef.src = req.files[0];
-	imageb.src = req.files[1];
-	
-	imageb.onload = () =>{	
-		imageb.drawImage(imagef, 0, 0, 150, 300);
-	}
-	console.log(imageb);
-	res.send(imageb)
-	
+	console.log(req.files[0]);
+
+	let canvasf;
+	let canvasb;
+
 })	
 
 
