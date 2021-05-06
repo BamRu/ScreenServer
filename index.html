@@ -73,19 +73,19 @@
 
 		var imageBlobF =await new Promise(resolve => canvasF.toBlob(resolve, 'image/png'));
 		
-		console.log(imageBlobF);
+		// console.log(imageBlobF);
 
 		var imageBlobB =await new Promise(resolve => canvasB.toBlob(resolve, 'image/png'));
 
 		// inp.push(imageBlobB);
 		// inp.push(imageBlobF);
 
-		console.log(formData,);
+		// console.log(formData);
 		
 		formData.append("photoF",imageBlobF);
 		formData.append("photoB",imageBlobB);
 
-		console.log(formData);
+		// console.log(formData);
 		
 		// inp.push(Canvas2Image.convertToPNG(canvasF, 300, 150));
 		// inp.push(Canvas2Image.convertToPNG(canvasB, 300, 150));
@@ -111,8 +111,9 @@
 			body: formData
 		});	
 
-		const result = await response.json();
-		console.log('Успех:', JSON.stringify(result));
+		const result = await response;
+		console.log(result);
+		// console.log('Успех:', JSON.stringify(result));
 	}
 	
 	async function uploads(){
