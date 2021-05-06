@@ -17,7 +17,7 @@
 	<canvas id="canvasBack"></canvas>
 	<input type="button" value="Push me!" id="myBtn"  onclick="test()">
 	<input type="button" value="save" id="Copy"  onclick="uploads()" > <!-- onclick="copy()" -->
-	<canvas id="imgResult" ></canvas>
+	<img id="imgResult" >
 	
 	<!--<form enctype="multipart/form-data"  id="form" >
 		<input type="file" multiple id="input" name="files"></input>
@@ -56,49 +56,14 @@
 		imageF.height=0;
 		imageB.width=0;
 		imageB.height=0;
-		
-				
-		// formData.append("photoF",imageBlobF);
-		// formData.append("photoB",imageBlobB);
-		
-		// var imageBlobF = dataURLtoFile(Canvas2Image.convertToPNG(canvasf, 300, 150), "photof");
-		// var imageBlobB = dataURLtoFile(Canvas2Image.convertToPNG(canvasB, 300, 150), "photoB");
-		
-		
-		
-		// photos.append(imageBlobF);
-		// photos.append(imageBlobB);
-
-
 
 		var imageBlobF =await new Promise(resolve => canvasF.toBlob(resolve, 'image/png'));
-		
-		// console.log(imageBlobF);
 
 		var imageBlobB =await new Promise(resolve => canvasB.toBlob(resolve, 'image/png'));
-
-		// inp.push(imageBlobB);
-		// inp.push(imageBlobF);
-
-		// console.log(formData);
 		
 		formData.append("photoF",imageBlobF);
 		formData.append("photoB",imageBlobB);
-
-		// console.log(formData);
-		
-		// inp.push(Canvas2Image.convertToPNG(canvasF, 300, 150));
-		// inp.push(Canvas2Image.convertToPNG(canvasB, 300, 150));
-		
-		// inp.push(canvasB.toDataURL("image/png"));
-		// inp.push(canvasF.toDataURL("image/png"));
-
-		// console.log(inp);
-			
-		// input.ATTRIBUTE_NODE("photo", inp);
-			
-		// console.log(formData.has("photoF"));		
-		// console.log(formData.has("photo"));	
+	
 	}
 	
 	
@@ -107,13 +72,14 @@
 		const response = await fetch('/test', 
 		{
 			method: 'POST',
-			// headers: {"Content-Type": "application/x-www-form-urlencoded"},
 			body: formData
 		});	
 
-		const result = await response;
+		const result = await response.text();
 		console.log(result);
-		// console.log('Успех:', JSON.stringify(result));
+
+		let imageRes = document.getElementById("imgResult");
+		imageRes.src= result;
 	}
 	
 	async function uploads(){

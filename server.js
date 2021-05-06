@@ -11,13 +11,7 @@ const upload = multer({ dest: 'uploads/' });
 
 const reduce = require('image-blob-reduce')();	// blob to canvas
 
-// const canvasf = createCanvas(300, 150);	//	canvas 1
-// const canvasb = createCanvas(300, 150);	//	canvas 2
-// const ctxf = canvasf.getContext('2d');	//	canvas
-// const ctxb = canvasb.getContext('2d');	//	canvas
-
-// const imagef = new Image();
-// const imageb = new Image();
+const img = new Image;	
 
 app.use(express.static(path.join(__dirname, 'public')));	
 app.use("/node_modules", express.static('./node_modules/'));
@@ -33,22 +27,19 @@ app.get('/', (req, res) => {
 //app.post("/test", urlencodedParser, function (req, res){
 app.post("/test", upload.any(), function (req, res) {
 	
-const img = new Image;	
- 
-mergeImages([req.files[0].path, req.files[1].path], {
+
+
+mergeImages(["./image/2.png", "./image/1.png"], {
   Canvas: Canvas,
   Image: Image
 })
-  .then(b64 => img.src = b64);
+ .then(b64 => {img.src = b64});
 
 	// console.log(req.files[0]);
-
-	// let canvasf = reduce.toCanvas(req.files[0].path, 300);
-	// let canvasb = reduce.toCanvas(req.files[1].path, 300);
-
 	console.log(img.src);
-	// res.send(iamgef);
-})	
+	
+	res.send(img.src);
+	})	
 
 
 // app.post("/upload", function (req, res) {
